@@ -1,6 +1,4 @@
 Rule Book for Creating rules.yaml
-This rule book provides guidelines and examples for creating a comprehensive rules.yaml file used to define Open Policy Agent (OPA) rules for Kubernetes resources, Helm charts, and other deployment configurations.
-
 Table of Contents
 Rule Structure
 Supported Kubernetes Kinds
@@ -9,7 +7,7 @@ Conditional Logic
 Comprehensive Rule Coverage
 Guidelines for Writing Rules
 Example of Full rules.yaml
-Rule Structure
+1. Rule Structure
 Each rule in rules.yaml follows this basic structure:
 
 yaml
@@ -28,7 +26,15 @@ Copy code
       value: <Expected Value> # Optional based on operator
       value_from: "<Reference Path>" # Optional, if the value comes from another path
   message: "<Error Message>"
-Supported Kubernetes Kinds
+name: A descriptive name for the rule.
+match: Defines the kind of Kubernetes resource that the rule applies to.
+conditions: A list of conditions that need to be met for the rule to trigger.
+path: The YAML path in the Kubernetes manifest to be checked.
+operator: The condition operator (e.g., equals, exists, greater_than, less_than, etc.).
+value: The value to compare against (optional, based on the operator).
+value_from: Specifies a value from another YAML path (optional, based on the operator).
+message: The error message to show when the rule fails.
+2. Supported Kubernetes Kinds
 The following Kubernetes resource kinds are supported:
 
 Pod
@@ -43,7 +49,7 @@ NetworkPolicy
 Ingress
 ConfigMap
 Secret
-Operators and their Use
+3. Operators and their Use
 The following operators can be used in the conditions:
 
 Operator	Description	Example
@@ -54,12 +60,12 @@ less_than	Checks if a value is less than the given value.	path: spec.ports[*].po
 regex_match	Validates the value against a regular expression.	path: metadata.labels.app operator: regex_match value: "^frontend-.*"
 in	Checks if a value is part of a predefined set.	path: spec.type operator: in value: ["ClusterIP", "NodePort"]
 not_equals	Checks if a value is not equal to the given value.	path: spec.securityContext.runAsUser operator: not_equals value: 0
-Conditional Logic
+4. Conditional Logic
 There are two forms of conditional logic that can be applied in rules.yaml:
 
 All Conditions Must Pass: When all conditions must pass for a rule to trigger, you can specify multiple conditions inside a rule.
 Any Condition Can Pass: When any one condition can trigger a rule, you need to create separate conditions under the same rule.
-Comprehensive Rule Coverage
+5. Comprehensive Rule Coverage
 Examples of best practices for various Kubernetes resources and how they can be reflected in the rules.yaml file:
 
 Pod Security Context
@@ -69,33 +75,9 @@ Network Policies
 PersistentVolumeClaim Storage Requests
 Pod Affinity Rules
 Helm Chart Validations
-Guidelines for Writing Rules
+6. Guidelines for Writing Rules
 Identify Resource: Ensure that the kind specified in match corresponds to a Kubernetes resource.
 Use Specific Paths: Define precise YAML paths that directly reference the parts of the resource you want to validate.
 Apply Correct Operators: Use the right operators for comparison (e.g., equals for equality, exists for checking the presence of fields, etc.).
 Meaningful Error Messages: Craft error messages that make it clear why the rule is being violated and what action should be taken.
-Testing: After defining the rules, test them against actual Kubernetes manifests to ensure they work as expected.
-Example of Full rules.yaml
-Here is an example of a full rules.yaml file:
-
-yaml
-
-Verify
-
-Open In Editor
-Edit
-Copy code
-rules:
-  - name: "Deny Privileged Pods"
-    match:
-      kind: Pod
-    conditions:
-      - path: spec.containers[*].securityContext.privileged
-        operator: equals
-        value: true
-    message: "Privileged containers are not allowed."
-
-  - name: "Deny Service Port 8080"
-    match:
-      kind: Service
-
+Testing: After defining the rules, test them against actual Kubernetes manifests to ensure they work as expected
