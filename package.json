@@ -1,0 +1,67 @@
+{
+  "name": "statickuber",
+  "displayName": "statickuber",
+  "description": "statickuber is a VS Code extension that provides real-time Kubernetes manifest validation using Conftest. It helps developers ensure their Kubernetes configurations comply with security and operational policies before deployment, catching issues such as privileged containers, missing resource limits, and deprecated API usage.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onCommand:extension.validateKubernetesManifest"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "object",
+        "title": "StaticKuber Settings"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "StaticKuber Settings",
+      "properties": {
+        "staticKuber.policyDirectory": {
+          "type": "string",
+          "default": "${workspaceFolder}/policies",
+          "description": "The directory containing Rego policies for validation."
+        },
+        "staticKuber.helmValuesFile": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a custom Helm values.yaml file for rendering Helm templates."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.54.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.9.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

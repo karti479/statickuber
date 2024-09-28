@@ -1,0 +1,50 @@
+rules:
+  - name: "Deny Privileged Pods"
+    match:
+      kind: Pod
+    conditions:
+      - path: spec.containers[*].securityContext.privileged
+        operator: equals
+        value: true
+    message: "Privileged containers are not allowed."
+
+  - name: "Service Port Range Validation"
+    match:
+      kind: Service
+    conditions:
+      - path: spec.ports[*].port
+        operator: greater_than
+        value: 30000
+      - path: spec.ports[*].port
+        operator: less_than
+        value: 32767
+    message: "Service ports must be within the range 30000-32767."
+
+  - name: "Ensure Resource Requests and Limits"
+    match:
+      kind: Pod
+    conditions:
+      all:
+        - path: spec.containers[*].resources.requests.memory
+          operator: exists
+        - path: spec.containers[*].resources.limits.cpu
+          operator: exists
+    message: "Containers must have resource requests and limits for memory and CPU."
+
+  - name: "Container Resource Limits Greater Than Requests"
+    match:
+      kind: Pod
+    conditions:
+      - path: spec.containers[*].resources.limits.cpu
+        operator: greater_than
+        value_from: spec.containers[*].resources.requests.cpu
+    message: "Container CPU limits must be greater than or equal to requests."
+
+  - name: "App Label Validation"
+    match:
+      kind: Pod
+    conditions:
+      - path: metadata.labels.app
+        operator: regex_match
+        value: "^frontend-.*"
+    message: "All apps must have a label starting with 'frontend-'."
