@@ -77,7 +77,8 @@ rules:
         value: "^frontend-.*"
     message: "All apps must have a label starting with 'frontend-'."
 
-## Supported Condition Operators
+
+### Supported Condition Operators
 
 1.equals: Checks if a field matches a specific value.
 2.exists: Ensures that a field is present in the YAML.
@@ -85,7 +86,7 @@ rules:
 4.less_than: Ensures that a numeric value is less than the specified value.
 5.regex_match: Validates if a field matches a regular expression.
 
-## Usage 
+# Usage 
 1. Adding Custom Rules:
 
 To define custom policies for your Kubernetes manifests:
@@ -104,7 +105,7 @@ If you are working with Helm templates, StaticKuber will:
 - Whenever you save a Kubernetes YAML or Helm template file, StaticKuber automatically validates the file and provides real-time. 
 - feedback. Any rule violations will be shown in the editor as error or warning messages, with a description of the violation.
 
-## Supported Kubernetes Resource Types
+# Supported Kubernetes Resource Types
 * StaticKuber supports validation of various Kubernetes resources, including but not limited to:
 
 Pod
@@ -120,12 +121,12 @@ PersistentVolumeClaim
 HorizontalPodAutoscaler
 You can easily add new rules for these resources by updating the rules.yaml file.
 
-## Requirements
+# Requirements
 Visual Studio Code
 Open Policy Agent (OPA) installed and available in your system PATH.
 (Optional) Helm installed if working with Helm templates.
 
-## Known Issues
+# Known Issues
 Helm templates: Rendering complex Helm charts may sometimes require additional configurations (e.g., passing values through --values flags).
 Unsupported Kubernetes Versions: Ensure that your Kubernetes manifests are compatible with the latest Kubernetes API versions.
 Future Features
@@ -134,15 +135,16 @@ Auto-fix Suggestions: Suggest automatic fixes for common Kubernetes misconfigura
 Custom OPA Policy Support: Allow users to load and apply custom OPA policies directly from their workspace.
 CI/CD Integration: Future integration with CI/CD pipelines for policy checks during build and deployment stages.
 
-## Release Notes
+# Release Notes
 1.0.0
 ## Initial release of StaticKuber.
 Supports dynamic .rego generation from rules.yaml.
 Validates Kubernetes YAML files and Helm templates.
 Real-time feedback on policy violations.
 Custom rule support for various Kubernetes resources.
-## Contributing
+
+# Contributing
 If you'd like to contribute to StaticKuber, feel free to fork the repository and open a pull request. All contributions are welcome!
 
-## License
+# License
 This project is licensed under the Opne source StaticKuber
