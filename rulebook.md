@@ -84,4 +84,155 @@ Ensure Pods do not have privileged containers.
       value: true
   message: "Privileged containers are not allowed."
 ```
+### 5.2 Service Port Validation
+- ** Ensure that Service ports are within a certain range and disallow specific ports like 8080.
+```yaml
+- name: "Deny Service Port 8080"
+  match:
+    kind: Service
+  conditions:
+    - path: spec.ports[*].port
+      operator: equals
+      value: 8080
+  message: "Service ports cannot be set to 8080."
 
+- name: "Service Port Range Validation"
+  match:
+    kind: Service
+  conditions:
+    - path: spec.ports[*].port
+      operator: greater_than
+      value: 30000
+    - path: spec.ports[*].port
+      operator: less_than
+      value: 32767
+  message: "Service ports must be within the range 30000-32767."
+```
+### 5.3 Deployment Best Practices
+- ** Ensure that Deployments specify the number of replicas.
+```yaml
+- name: "Ensure Replicas in Deployment"
+  match:
+    kind: Deployment
+  conditions:
+    - path: spec.replicas
+      operator: exists
+      value: true
+  message: "Deployments must specify the number of replicas."
+
+```
+### 5.4 Network Policies
+- ** Ensure that NetworkPolicy resources define egress ports.
+```yaml
+- name: "Ensure NetworkPolicy Egress"
+  match:
+    kind: NetworkPolicy
+  conditions:
+    - path: spec.egress[*].ports
+      operator: exists
+      value: true
+  message: "NetworkPolicy must define egress ports."
+```
+
+### 5.5 PersistentVolumeClaim Storage Requests
+- ** Ensure that PersistentVolumeClaims have storage requests defined.
+```yaml
+- name: "Ensure PersistentVolumeClaim Storage Request"
+  match:
+    kind: PersistentVolumeClaim
+  conditions:
+    - path: spec.resources.requests.storage
+      operator: exists
+      value: true
+  message: "PersistentVolumeClaims must have storage requests."
+
+```
+
+
+### 5.6 Pod Affinity Rules
+- ** Ensure Pods define affinity rules.
+```yaml
+- name: "Ensure Pod Affinity Rule"
+  match:
+    kind: Pod
+  conditions:
+    - path: spec.affinity.podAffinity
+      operator: exists
+      value: true
+  message: "Pods must define affinity rules."
+```
+
+## 6. Helm Chart Validations
+- ** For Helm chart resources, you can also apply similar rules. If you are using placeholders in Helm templates like .Values, ensure that those variables are properly validated in your rules.yaml.
+- **  Example for Helm Chart Service:
+```yaml
+- name: "Helm Service Port Validation"
+  match:
+    kind: Service
+  conditions:
+    - path: spec.ports[*].port
+      operator: equals
+      value: "{{ .Values.servicePort }}"
+  message: "Helm Service ports must not be set to the default value."
+```
+## 7. Guidelines for Writing Rules
+
+You can apply rules to the following Kubernetes resource kinds:
+
+- Identify Resource: Ensure that the kind specified in match corresponds to a Kubernetes resource.
+- Use Specific Paths: Define precise YAML paths that directly reference the parts of the resource you want to validate.
+- Apply Correct Operators: Use the right operators for comparison (e.g., equals for equality, exists for checking the presence of fields, etc.).
+- Meaningful Error Messages: Craft error messages that make it clear why the rule is being violated and what action should be taken.
+- Testing: After defining the rules, test them against actual Kubernetes manifests to ensure they work as expected.
+
+## 8. Example of Full rules.yaml
+```yaml
+rules:
+  - name: "Deny Privileged Pods"
+    match:
+      kind: Pod
+    conditions:
+      - path: spec.containers[*].securityContext.privileged
+        operator: equals
+        value: true
+    message: "Privileged containers are not allowed."
+
+  - name: "Deny Service Port 8080"
+    match:
+      kind: Service
+    conditions:
+      - path: spec.ports[*].port
+        operator: equals
+        value: 8080
+    message: "Service ports cannot be set to 8080."
+
+  - name: "Service Port Range Validation"
+    match:
+      kind: Service
+    conditions:
+      - path: spec.ports[*].port
+        operator: greater_than
+        value: 30000
+      - path: spec.ports[*].port
+        operator: less_than
+        value: 32767
+    message: "Service ports must be within the range 30000-32767."
+
+  - name: "Ensure Replicas in Deployment"
+    match:
+      kind: Deployment
+    conditions:
+      - path: spec.replicas
+        operator: exists
+        value: true
+    message: "Deployments must specify the number of replicas."
+
+  - name: "Ensure NetworkPolicy Egress"
+    match:
+      kind: NetworkPolicy
+    conditions:
+      - path: spec.egress[*].ports
+        operator: exists
+        value: true
+    message: "NetworkPolicy must define egress ports."
+```
