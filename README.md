@@ -95,6 +95,8 @@ To define custom policies for your Kubernetes manifests:
 - Add your validation rules using the provided structure.
 - Save your Kubernetes YAML or Helm template file, and StaticKuber will automatically validate it against your rules.
 
+## detailed usesage - 
+
 2. Validating Helm Templates:
 
 If you are working with Helm templates, StaticKuber will:
