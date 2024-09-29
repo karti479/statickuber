@@ -149,6 +149,15 @@ Step 6: Manual Validation Command
 Select the command to run validation on the open YAML file.
 
 #### Expected Errors and Results
+
+![image](https://github.com/user-attachments/assets/b27a14e7-6fdf-4fbc-b04d-2b959eddc7cb)
+
+![image](https://github.com/user-attachments/assets/909fd635-cdaf-4e89-b440-d6ecc4e3b05d)
+
+![image](https://github.com/user-attachments/assets/a4c0084f-5077-4324-92f8-f81daf8191dc)
+
+
+
   Expected Results on Rule Violations:
 - Error Notification: If a Kubernetes manifest file does not meet the rules defined in rules.yaml, a warning or error message will be displayed in VS Code.
 
