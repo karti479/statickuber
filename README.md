@@ -1,4 +1,4 @@
-# StaticKuber - Kubernetes Static Code Analyzer for VS Code
+# StaticKuber - Kubernetes Static Code Analyzer for Developer Feedback Loops -Security Anamoly finder PSP PSS rule.
 
 StaticKuber is a VS Code extension designed to help developers and DevOps professionals validate Kubernetes YAML configurations and Helm templates in real-time. The extension enforces best practices and security standards by automatically validating manifests against user-defined policies stored in `rules.yaml`. StaticKuber also supports dynamic `.rego` file generation for OPA (Open Policy Agent) policy enforcement.
 
