@@ -28,6 +28,7 @@ StaticKuber monitors Kubernetes manifests and Helm templates in your workspace. 
 3. (Optional) Install [Helm](https://helm.sh/) if you're working with Helm charts.
 4. Create a `policies/rules.yaml` file in your project's root directory to define custom validation rules.
 
+
 ## Rule Definitions in `rules.yaml`
 
 The core of StaticKuber is its ability to dynamically generate `.rego` files based on policies defined in `rules.yaml`. Below is a typical structure for `rules.yaml`:
@@ -120,32 +121,34 @@ If you are working with Helm templates, StaticKuber will:
 - PersistentVolumeClaim
 - HorizontalPodAutoscaler
 
-- ** You can easily add new rules for these resources by updating the rules.yaml file. 
+- ** You can easily add new rules for these resources by updating the rules.yaml file.
+# Rule Book  
+- https://github.com/karti479/statickuber/blob/main/rulebook.md
 
 # Requirements
-Visual Studio Code
-Open Policy Agent (OPA) installed and available in your system PATH.
-(Optional) Helm installed if working with Helm templates.
+- Visual Studio Code
+- Open Policy Agent (OPA) installed and available in your system PATH.
+- (Optional) Helm installed if working with Helm templates.
 
 # Known Issues
-Helm templates: Rendering complex Helm charts may sometimes require additional configurations (e.g., passing values through --values flags).
-Unsupported Kubernetes Versions: Ensure that your Kubernetes manifests are compatible with the latest Kubernetes API versions.
-Future Features
-Enhanced UI Feedback: Improved integration with the VS Code problem panel for viewing policy violations.
-Auto-fix Suggestions: Suggest automatic fixes for common Kubernetes misconfigurations.
-Custom OPA Policy Support: Allow users to load and apply custom OPA policies directly from their workspace.
-CI/CD Integration: Future integration with CI/CD pipelines for policy checks during build and deployment stages.
+- Helm templates: Rendering complex Helm charts may sometimes require additional configurations (e.g., passing values through --values flags).
+- Unsupported Kubernetes Versions: Ensure that your Kubernetes manifests are compatible with the latest Kubernetes API versions.
+- Future Features
+- Enhanced UI Feedback: Improved integration with the VS Code problem panel for viewing policy violations.
+- Auto-fix Suggestions: Suggest automatic fixes for common Kubernetes misconfigurations.
+- Custom OPA Policy Support: Allow users to load and apply custom OPA policies directly from their workspace.
+- CI/CD Integration: Future integration with CI/CD pipelines for policy checks during build and deployment stages.
 
 # Release Notes
 1.0.0
 ## Initial release of StaticKuber.
-Supports dynamic .rego generation from rules.yaml.
-Validates Kubernetes YAML files and Helm templates.
-Real-time feedback on policy violations.
-Custom rule support for various Kubernetes resources.
+- Supports dynamic .rego generation from rules.yaml.
+- Validates Kubernetes YAML files and Helm templates.
+- Real-time feedback on policy violations.
+- Custom rule support for various Kubernetes resources.
 
 # Contributing
 If you'd like to contribute to StaticKuber, feel free to fork the repository and open a pull request. All contributions are welcome!
 
 # License
-This project is licensed under the Opne source StaticKuber
+This project is licensed under the Opne source for StaticKuber
