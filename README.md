@@ -77,7 +77,7 @@ rules:
         value: "^frontend-.*"
     message: "All apps must have a label starting with 'frontend-'."
 
-
+```
 ### Supported Condition Operators
 
 1.equals: Checks if a field matches a specific value.
@@ -106,20 +106,21 @@ If you are working with Helm templates, StaticKuber will:
 - feedback. Any rule violations will be shown in the editor as error or warning messages, with a description of the violation.
 
 # Supported Kubernetes Resource Types
-* StaticKuber supports validation of various Kubernetes resources, including but not limited to:
+- ** StaticKuber supports validation of various Kubernetes resources, including but not limited to:
 
-Pod
-Deployment
-Service
-NetworkPolicy
-ConfigMap
-Secret
-StatefulSet
-DaemonSet
-Ingress
-PersistentVolumeClaim
-HorizontalPodAutoscaler
-You can easily add new rules for these resources by updating the rules.yaml file.
+- Pod
+- Deployment
+- Service
+- NetworkPolicy
+- ConfigMap
+- Secret
+- StatefulSet
+- DaemonSet
+- Ingress
+- PersistentVolumeClaim
+- HorizontalPodAutoscaler
+
+- ** You can easily add new rules for these resources by updating the rules.yaml file. 
 
 # Requirements
 Visual Studio Code
